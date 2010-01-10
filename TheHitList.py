@@ -81,16 +81,17 @@ class Task(object):
 		return '<%s:%s:%s>'%(self.__class__,self.id,self.title)
 	
 class Group(object):
-	def __init__(self,obj):
+	def __init__(self,obj=None):
 		self._raw = obj
 		self._properties = [
 			'id','name',
 			'modified_date',
 			'created_date'
 			]
-		for prop in self._properties:
-			func = getattr(obj,prop)
-			self.__setattr__(prop,func())
+		if obj:
+			for prop in self._properties:
+				func = getattr(obj,prop)
+				self.__setattr__(prop,func())
 	def print_obj(self):
 		for prop in self._properties:
 			print prop,self.__getattribute__(prop)
@@ -108,6 +109,11 @@ class List(Group):
 			new=appscript.k.task,
 			with_properties=task.format_obj()	
 		)
+	def format_obj(self):
+		obj = {}
+		if self.__dict__.get('name',None):
+			obj[appscript.k.name] = self.name
+		return obj
 class Folder(Group):
 	def groups(self):
 		if not self._raw.groups: return []
@@ -123,6 +129,11 @@ class Folder(Group):
 			else:
 				print 'Error:',tmpClass
 		return groups
+	def add_list(self,list):
+		self._raw().make(
+			new=appscript.k.list_,
+			with_properties=list.format_obj()
+		)
 class Smart_Folder(Group):
 	pass
 class Tag(Group):
