@@ -28,24 +28,11 @@ class Application(object):
 		return self.thl.help()
 			
 	def find_list(self,name):
-		def _find_list(name,groups):
-			for group in groups:
-				if isinstance(group,Folder):
-					result = _find_list(name,group.groups())
-					if result is not None: return result
-				if group.name == name: return group
-			return None
-		return _find_list(name,self.folders().groups())
-	
+		return self.folders().find_list(name)
 	def find_folder(self,name):
-		def _find_folder(name,groups):
-			for group in groups:
-				if isinstance(group,Folder):
-					if group.name == name: return group
-					result = _find_folder(name,group.groups())
-					if result is not None: return result
-			return None
-		return _find_folder(name,self.folders().groups())
+		return self.folders().find_folder(name)
+	def find_task(self,name):
+		return self.folders().find_task(name)
 	
 class Task(object):
 	def __init__(self,obj=None):
@@ -97,6 +84,24 @@ class Group(object):
 			print prop,self.__getattribute__(prop)
 	def __repr__(self):
 		return '<%s:%s:%s>'%(self.__class__,self.id,self.name)
+	def find_list(self,name):
+		def _find_list(name,groups):
+			for group in groups:
+				if isinstance(group,Folder):
+					result = _find_list(name,group.groups())
+					if result is not None: return result
+				if group.name == name: return group
+			return None
+		return _find_list(name,self.groups())
+	def find_folder(self,name):
+		def _find_folder(name,groups):
+			for group in groups:
+				if isinstance(group,Folder):
+					if group.name == name: return group
+					result = _find_folder(name,group.groups())
+					if result is not None: return result
+			return None
+		return _find_folder(name,self.groups())
 
 class List(Group):
 	def tasks(self):
