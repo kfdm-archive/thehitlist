@@ -1,5 +1,13 @@
 import appscript
 
+def rprint(items,tabs = 0):
+	for item in items:
+		print '\t'*tabs,item
+		if isinstance(item,List):
+			rprint(item.tasks(),(tabs+1))
+		if isinstance(item,Folder):
+			rprint(item.groups(),(tabs+1))
+
 class Application(object):
 	def __init__(self):
 		self.thl = appscript.app('The Hit List')
@@ -28,6 +36,16 @@ class Application(object):
 				if group.name == name: return group
 			return None
 		return _find_list(name,self.folders().groups())
+	
+	def find_folder(self,name):
+		def _find_folder(name,groups):
+			for group in groups:
+				if isinstance(group,Folder):
+					if group.name == name: return group
+					result = _find_folder(name,group.groups())
+					if result is not None: return result
+			return None
+		return _find_folder(name,self.folders().groups())
 	
 class Task(object):
 	def __init__(self,obj=None):
@@ -77,7 +95,7 @@ class Group(object):
 		for prop in self._properties:
 			print prop,self.__getattribute__(prop)
 	def __repr__(self):
-		return '<%s : %s>'%(self.id,self.name)
+		return '<%s:%s:%s>'%(self.__class__,self.id,self.name)
 
 class List(Group):
 	def tasks(self):
