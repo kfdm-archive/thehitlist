@@ -69,9 +69,9 @@ class Task(object):
 	def format_obj(self):
 		obj = {}
 		if self.__dict__.get('title',None):
-			obj[appscript.k.title] = self.title
+			obj[appscript.k.title] = unicode(self.title,'utf-8')
 		if self.__dict__.get('notes',None):
-			obj[appscript.k.notes] = self.notes
+			obj[appscript.k.notes] = unicode(self.notes,'utf-8')
 		return obj
 	def __repr__(self):
 		return '<%s:%s:%s>'%(self.__class__,self.id,self.title)
