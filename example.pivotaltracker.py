@@ -1,8 +1,5 @@
 import sys
 
-if len(sys.argv) != 6:
-	exit('Usage: '+sys.argv[0]+' <tracker_name> <tracker_pass> <tracker_proj_id> <tracker_query> <thl_target>')
-
 try:
 	from pytracker import Tracker
 	from pytracker import Story
@@ -12,11 +9,14 @@ except ImportError:
 
 import TheHitList
 
-tracker_name = sys.argv[1]
-tracker_pass = sys.argv[2]
-tracker_proj = int(sys.argv[3])
-tracker_query = sys.argv[4]
-thl_target = sys.argv[5]
+try:
+	tracker_name = sys.argv[1]
+	tracker_pass = sys.argv[2]
+	tracker_proj = int(sys.argv[3])
+	tracker_query = sys.argv[4]
+	thl_target = sys.argv[5]
+except IndexError:
+	exit('Usage: '+sys.argv[0]+' <tracker_name> <tracker_pass> <tracker_proj_id> <tracker_query> <thl_target>')
 
 def add_story(story,list):
 	'''
