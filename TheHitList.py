@@ -1,4 +1,11 @@
-import appscript
+try:
+	import appscript
+except ImportError:
+	import sys
+	print >> sys.stderr,'Requires appscript module'
+	print >> sys.stderr,'http://appscript.sourceforge.net/py-appscript/install.html'
+	print >> sys.stderr,'"sudo easy_install appscript"'
+	exit(1)
 
 def rprint(items,tabs = 0):
 	for item in items:
@@ -49,7 +56,9 @@ class Task(object):
 		if obj:
 			for prop in self._properties:
 				func = getattr(obj,prop)
-				self.__setattr__(prop,func())
+				value = func()
+				if value == appscript.k.missing_value: value = None
+				self.__setattr__(prop,value)
 		else:
 			self.id = None
 			self.title = None
