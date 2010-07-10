@@ -28,10 +28,10 @@ def add_story(story,list):
 		if task.title.startswith('(%s)'%story.story_id):
 			print 'found', task.title
 			return
-	print 'adding', task.title
+	print 'adding', story.name
 	newtask = TheHitList.Task()
-	newtask.title = '(%s) %s'%(story.story_id,story.name)
-	newtask.notes = story.description
+	newtask.title = ('(%s) %s'%(story.story_id,story.name)).encode('utf8')
+	newtask.notes = story.description.encode('utf8')
 	list.add_task(newtask)
 
 #Talk to Tracker
