@@ -7,39 +7,68 @@ except ImportError:
 	print >> sys.stderr,'"sudo easy_install appscript"'
 	exit(1)
 
-def rprint(items,tabs = 0):
-	for item in items:
-		print '\t'*tabs,item
-		if isinstance(item,List):
-			rprint(item.tasks(),(tabs+1))
-		if isinstance(item,Folder):
-			rprint(item.groups(),(tabs+1))
+def rprint(item,tabs = 0):
+	'''Recursively print Task, Folder, or Group objects'''
+	if isinstance(item,Task):
+		print '\t'*tabs,'<Task>',item.title
+	if isinstance(item,List):
+		print '\t'*tabs,'<List>',item.name
+		for task in item.tasks():
+			rprint(task,(tabs+1))
+	if isinstance(item,Folder):
+		print '\t'*tabs,'<Folder>',item.name
+		for group in item.groups():
+			rprint(group,(tabs+1))
 
 class Application(object):
 	def __init__(self):
 		self.thl = appscript.app('The Hit List')
 	def inbox(self):
+		'''Return the inbox List'''
 		return List(self.thl.inbox)
 	def today(self):
+		'''Return the today List'''
 		return List(self.thl.today_list)
 	def upcoming(self):
+		'''Return the upcoming List'''
 		return List(self.thl.upcoming_list)
 	def folders(self):
+		'''Return the root Folder'''
 		return Folder(self.thl.folders_group)
 	def tags(self):
+		'''Return a list of Tag objects'''
 		tags = []
 		for tag in self.thl.tags_group.tags():
 			tags.append(Tag(tag))
 		return tags
-	def help(self):
-		return self.thl.help()
 			
 	def find_list(self,name):
+		'''Recursivly find a List by name'''
 		return self.folders().find_list(name)
 	def find_folder(self,name):
+		'''Recursivly find a Folder by name'''
 		return self.folders().find_folder(name)
 	def find_task(self,name):
+		'''Recursivly find a Task by name'''
 		return self.folders().find_task(name)
+	
+	def add_task(self,task):
+		'''Add a Task to the inbox'''
+		self.inbox().add_task(task)
+	def add_list(self,list):
+		'''Add a List to the root folder'''
+		self.folders().add_list(list)
+	def new_list(self,name):
+		'''Add a list to the root folder with the specified name'''
+		list = List()
+		list.name = name
+		self.add_list(list)
+		return self.find_list(name)
+	def new_task(self,title):
+		'''Add a task to the inbox with the specified title'''
+		task = Task()
+		task.title = title
+		self.inbox().add_task(task)
 	
 class Task(object):
 	def __init__(self,obj=None):
@@ -75,6 +104,8 @@ class Task(object):
 		return obj
 	def __repr__(self):
 		return '<%s:%s:%s>'%(self.__class__,self.id,self.title)
+	def rprint(self):
+		rprint(self)
 	
 class Group(object):
 	def __init__(self,obj=None):
@@ -111,6 +142,8 @@ class Group(object):
 					if result is not None: return result
 			return None
 		return _find_folder(name,self.groups())
+	def rprint(self):
+		rprint(self)
 
 class List(Group):
 	def tasks(self):
