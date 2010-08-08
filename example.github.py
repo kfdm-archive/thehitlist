@@ -28,10 +28,11 @@ def add_issue(repo,story,list):
 
 gh_name = commands.getoutput('/usr/local/bin/git config --global --get github.user')
 gh_token = commands.getoutput('/usr/local/bin/git config --global --get github.token')
+thl_list = commands.getoutput('/usr/local/bin/git config --global --get thl.list')
 
 github = Github(gh_name,gh_token)
 thl = TheHitList.Application()
-list =  thl.find_list('GitHub')
+list =  thl.find_list(thl_list)
 
 for repo in github.repos.list(gh_name):
 	if repo.open_issues > 0:
