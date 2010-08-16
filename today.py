@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import datetime
 import TheHitList
-from Terminal import TerminalController
+from extra.Terminal import TerminalController
 
 SPACER_STR		= '${BOLD}${BLUE}%s${NORMAL}'
 

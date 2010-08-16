@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 import TheHitList
-from Terminal import TerminalController
+from extra.Terminal import TerminalController
 HILIGHT = '${BOLD}${YELLOW}%s${NORMAL}'
 term = TerminalController()
 def tprint(string): print term.render(HILIGHT % string)
