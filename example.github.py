@@ -26,9 +26,9 @@ def add_issue(repo,story,list):
 	newtask.title = title.encode('utf8')
 	list.add_task(newtask)
 
-gh_name = commands.getoutput('/usr/local/bin/git config --global --get github.user')
-gh_token = commands.getoutput('/usr/local/bin/git config --global --get github.token')
-thl_list = commands.getoutput('/usr/local/bin/git config --global --get thl.list')
+gh_name = commands.getoutput('/usr/local/bin/git config --get github.user')
+gh_token = commands.getoutput('/usr/local/bin/git config --get github.token')
+thl_list = commands.getoutput('/usr/local/bin/git config --get thl.list')
 
 github = Github(gh_name,gh_token)
 thl = TheHitList.Application()

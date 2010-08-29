@@ -44,12 +44,15 @@ class Application(object):
 			
 	def find_list(self,name):
 		'''Recursivly find a List by name'''
+		name = unicode(name,'utf-8')
 		return self.folders().find_list(name)
 	def find_folder(self,name):
 		'''Recursivly find a Folder by name'''
+		name = unicode(name,'utf-8')
 		return self.folders().find_folder(name)
 	def find_task(self,name):
 		'''Recursivly find a Task by name'''
+		name = unicode(name,'utf-8')
 		return self.folders().find_task(name)
 	
 	def add_task(self,task):
