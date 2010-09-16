@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-import sys
+#import getpass
 
 try:
 	from pytracker import Tracker
@@ -10,14 +10,12 @@ except ImportError:
 
 import TheHitList
 
-try:
-	tracker_name = sys.argv[1]
-	tracker_pass = sys.argv[2]
-	tracker_proj = int(sys.argv[3])
-	tracker_query = sys.argv[4]
-	thl_target = sys.argv[5]
-except IndexError:
-	exit('Usage: '+sys.argv[0]+' <tracker_name> <tracker_pass> <tracker_proj_id> <tracker_query> <thl_target>')
+tracker_name = raw_input('Tracker Username: ')
+#tracker_pass = getpass.getpass('Tracker Password: ')
+tracker_pass = raw_input('Tracker Password: ')
+tracker_proj = int(raw_input('Tracker Project: '))
+tracker_query = raw_input('Tracker Query: ')
+thl_target = raw_input('Target List: ')
 
 def add_story(story,list):
 	'''
@@ -43,6 +41,7 @@ stories = tracker.GetStories(tracker_query)
 #Talk to THL
 thl = TheHitList.Application()
 list =  thl.find_list(thl_target)
+
 if list:
 	for story in stories:
 		add_story(story,list)
