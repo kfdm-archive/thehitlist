@@ -139,6 +139,8 @@ class Group(object):
 	def find_folder(self,name):
 		def _find_folder(name,groups):
 			for group in groups:
+				if isinstance(group,Smart_Folder):
+					if group.name == name: return group
 				if isinstance(group,Folder):
 					if group.name == name: return group
 					result = _find_folder(name,group.groups())
@@ -173,7 +175,7 @@ class Folder(Group):
 			if tmpClass == appscript.k.folder:
 				groups.append(Folder(group))
 			elif tmpClass == appscript.k.smart_folder:
-				continue
+				groups.append(Smart_Folder(group))
 			elif tmpClass == appscript.k.list_:
 				groups.append(List(group))
 			else:
@@ -185,6 +187,12 @@ class Folder(Group):
 			with_properties=list.format_obj()
 		)
 class Smart_Folder(Group):
-	pass
+	def tasks(self):
+		print self._raw
+		print self._raw.tasks()
+		tasks = []
+		for task in self._raw.tasks():
+			tasks.append(Task(task))
+		return tasks
 class Tag(Group):
 	pass
