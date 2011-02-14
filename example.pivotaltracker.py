@@ -24,13 +24,13 @@ def add_story(story,list):
 	@param list: THL List
 	'''
 	for task in list.tasks():
-		if task.title.startswith('(%s)'%story.story_id):
+		if task.notes == story.url:	
 			print 'found', task.title
 			return
 	print 'adding', story.name
 	newtask = TheHitList.Task()
-	newtask.title = ('(%s) %s'%(story.story_id,story.name)).encode('utf8')
-	newtask.notes = story.description.encode('utf8')
+	newtask.title = ('%s /Pivotal'%(story.name)).encode('utf8')
+	newtask.notes = story.url.encode('utf8')
 	list.add_task(newtask)
 
 #Talk to Tracker
