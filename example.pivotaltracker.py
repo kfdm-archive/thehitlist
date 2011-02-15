@@ -9,6 +9,10 @@ except ImportError:
 	exit('Fatal Error: Requires pytracker module. http://code.google.com/p/pytracker/')
 
 import TheHitList
+from extra.Terminal import TerminalController
+term = TerminalController()
+def found(string): print term.render('${BOLD}${RED}Found${NORMAL} %s'%string)
+def adding(string): print term.render('${BOLD}${YELLOW}Adding${NORMAL} %s'%string)
 
 tracker_name = raw_input('Tracker Username: ')
 #tracker_pass = getpass.getpass('Tracker Password: ')
@@ -25,9 +29,9 @@ def add_story(story,list):
 	'''
 	for task in list.tasks():
 		if task.notes == story.url:	
-			print 'found', task.title
+			found(task.title)
 			return
-	print 'adding', story.name
+	adding(story.name)
 	newtask = TheHitList.Task()
 	newtask.title = ('%s /Pivotal'%(story.name)).encode('utf8')
 	newtask.notes = story.url.encode('utf8')
@@ -41,7 +45,7 @@ stories = tracker.GetStories(tracker_query)
 #Talk to THL
 thl = TheHitList.Application()
 list =  thl.find_list(thl_target)
-
+print '' #Line spacer
 if list:
 	for story in stories:
 		add_story(story,list)
