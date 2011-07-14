@@ -8,6 +8,9 @@ except ImportError:
 	exit('Fatal Error: Requires github module. http://github.com/ask/python-github2')
 
 # Read in configuration information from git's configuration files
+# To set, from the shell you can use
+# git config <key name> <value>
+# git config thl.list tasks
 gh_name = commands.getoutput('/usr/local/bin/git config --get github.user')
 gh_token = commands.getoutput('/usr/local/bin/git config --get github.token')
 thl_list = commands.getoutput('/usr/local/bin/git config --get thl.list')
