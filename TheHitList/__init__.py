@@ -80,7 +80,7 @@ class Task(object):
 			'id','title','notes',
 			'start_date','due_date',
 			'estimated_time','actual_time',
-			'archived_date','canceled_date',
+			'canceled_date',
 			'modified_date','priority',
 			'archived','canceled','completed',
 			'url','completed_date','repeating'
