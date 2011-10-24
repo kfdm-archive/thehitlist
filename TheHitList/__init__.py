@@ -43,6 +43,9 @@ class Application(object):
 		return tags
 			
 	def find_list(self,name):
+		if name.lower() in ['inbox', 'upcoming', 'today']:
+			list = getattr(self,name.lower())
+			return list()
 		'''Recursivly find a List by name'''
 		name = unicode(name,'utf-8')
 		return self.folders().find_list(name)
@@ -188,8 +191,6 @@ class Folder(Group):
 		)
 class Smart_Folder(Group):
 	def tasks(self):
-		print self._raw
-		print self._raw.tasks()
 		tasks = []
 		for task in self._raw.tasks():
 			tasks.append(Task(task))
