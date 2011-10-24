@@ -21,7 +21,7 @@ class THLParser(OptionParser):
     def parse_args(self):
         opts, args = OptionParser.parse_args(self)
         if len(args) == 0:
-            parser.error('Missing command')
+            args = ['list']
 
         command = args.pop(0).lower()
         if command not in ['add', 'list']:
@@ -32,7 +32,7 @@ class THLParser(OptionParser):
 
 def show_tasks(thl, opts, args):
     if len(args) == 0:
-        list = 'inbox'
+        list = 'today'
     else:
         list = args.pop(0)
     puts(colored.yellow('Showing tasks in %s' % unicode(list, 'utf8', 'replace')))
