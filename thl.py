@@ -32,7 +32,7 @@ class THLParser(OptionParser):
 
 def show_tasks(thl, opts, args):
     if len(args) == 0:
-        list = u'inbox'
+        list = 'inbox'
     else:
         list = args.pop(0)
     puts(colored.yellow('Showing tasks in %s' % unicode(list, 'utf8', 'replace')))
