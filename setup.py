@@ -9,6 +9,7 @@ setup(
 	url='http://github.com/kfdm/thehitlist/',
 	version='0.2',
 	packages=['TheHitList'],
+	install_requires=['appscript', 'clint'],
 	entry_points={
 		'console_scripts': [
 			'thl = thl:main'
