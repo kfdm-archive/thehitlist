@@ -1,0 +1,10 @@
+Metadata-Version: 1.0
+Name: TheHitList
+Version: 0.3
+Summary: Python library that wraps The Hit List's AppleScript api using appscript
+Home-page: http://github.com/kfdm/thehitlist/
+Author: Paul Traylor
+Author-email: UNKNOWN
+License: UNKNOWN
+Description: UNKNOWN
+Platform: UNKNOWN

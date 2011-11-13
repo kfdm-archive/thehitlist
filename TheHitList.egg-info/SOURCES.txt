@@ -1,0 +1,9 @@
+README
+setup.py
+TheHitList/__init__.py
+TheHitList.egg-info/PKG-INFO
+TheHitList.egg-info/SOURCES.txt
+TheHitList.egg-info/dependency_links.txt
+TheHitList.egg-info/entry_points.txt
+TheHitList.egg-info/requires.txt
+TheHitList.egg-info/top_level.txt

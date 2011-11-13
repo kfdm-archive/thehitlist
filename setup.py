@@ -7,7 +7,7 @@ setup(
 	description='Python library that wraps The Hit List\'s AppleScript api using appscript',
 	author='Paul Traylor',
 	url='http://github.com/kfdm/thehitlist/',
-	version='0.2',
+	version='0.3',
 	packages=['TheHitList'],
 	install_requires=['appscript', 'clint'],
 	entry_points={
