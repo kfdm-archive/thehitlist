@@ -14,7 +14,7 @@ puts(colored.yellow('Create new task in inbox'))
 thl.new_task('Creating a new task')
 
 puts(colored.yellow('Find named list or create a new one if it does not exist'))
-list =  thl.find_list('TheHitList.py')
+list = thl.find_list('TheHitList.py')
 if not list:
 	list = thl.new_list('TheHitList.py')
 

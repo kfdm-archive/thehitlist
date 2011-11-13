@@ -4,12 +4,14 @@ from optparse import OptionParser
 
 if __name__ == '__main__':
 	parser = OptionParser()
-	parser.add_option("--show", dest="show", help="Show tasks in a list", default=None)
-	parser.add_option("--list", dest="list", help="Add task to a specific list", default=None)
-	(opts,args) = parser.parse_args()
-	
+	parser.add_option("--show", dest="show",
+		help="Show tasks in a list", default=None)
+	parser.add_option("--list", dest="list",
+		help="Add task to a specific list", default=None)
+	(opts, args) = parser.parse_args()
+
 	thl = TheHitList.Application()
-	
+
 	if(opts.show):
 		if opts.show == 'inbox':
 			list = thl.inbox()
@@ -18,9 +20,10 @@ if __name__ == '__main__':
 		for task in list.tasks():
 			print task.title
 		exit()
-	
-	if(len(args)==0): parser.error('Missing Task')
-	
+
+	if(len(args) == 0):
+		parser.error('Missing Task')
+
 	newtask = TheHitList.Task()
 	newtask.title = ' '.join(args)
 	if opts.list is None:
@@ -28,5 +31,4 @@ if __name__ == '__main__':
 	else:
 		list = thl.find_list(opts.list)
 	list.add_task(newtask)
-	print 'Task (%s) has been added'%newtask.title
-		
+	print 'Task (%s) has been added' % newtask.title

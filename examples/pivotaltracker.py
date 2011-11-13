@@ -21,7 +21,8 @@ PT_PROJECT_ID = commands.getoutput('/usr/local/bin/git config --get pivotal.proj
 PT_QUERY = commands.getoutput('/usr/local/bin/git config --get pivotal.query')
 THL_LIST = commands.getoutput('/usr/local/bin/git config --get thl.list')
 
-def add_story(story,list):
+
+def add_story(story, list):
 	'''
 	Add a PT Story to a THL List
 	@param story: PT Story
@@ -33,7 +34,7 @@ def add_story(story,list):
 			return
 	puts(colored.yellow(story.name))
 	newtask = TheHitList.Task()
-	newtask.title = ('%s /Pivotal'%(story.name)).encode('utf8')
+	newtask.title = ('%s /Pivotal' % (story.name)).encode('utf8')
 	newtask.notes = story.url.encode('utf8')
 	list.add_task(newtask)
 
@@ -44,8 +45,8 @@ stories = tracker.GetStories(PT_QUERY)
 
 #Talk to THL
 thl = TheHitList.Application()
-list =  thl.find_list(THL_LIST)
-print '' #Line spacer
+list = thl.find_list(THL_LIST)
+print ''  # Line spacer
 if list:
 	for story in stories:
-		add_story(story,list)
+		add_story(story, list)
