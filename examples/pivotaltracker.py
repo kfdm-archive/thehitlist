@@ -3,6 +3,7 @@
 
 import commands
 import TheHitList
+from clint.textui import puts, colored
 try:
 	from pytracker import Tracker
 	from pytracker import Story
@@ -20,11 +21,6 @@ PT_PROJECT_ID = commands.getoutput('/usr/local/bin/git config --get pivotal.proj
 PT_QUERY = commands.getoutput('/usr/local/bin/git config --get pivotal.query')
 THL_LIST = commands.getoutput('/usr/local/bin/git config --get thl.list')
 
-from extra.Terminal import TerminalController
-term = TerminalController()
-def found(string): print term.render('${BOLD}${RED}Found${NORMAL} %s'%string)
-def adding(string): print term.render('${BOLD}${YELLOW}Adding${NORMAL} %s'%string)
-
 def add_story(story,list):
 	'''
 	Add a PT Story to a THL List
@@ -32,10 +28,10 @@ def add_story(story,list):
 	@param list: THL List
 	'''
 	for task in list.tasks():
-		if task.notes == story.url:	
-			found(task.title)
+		if task.notes == story.url:
+			puts(colored.red(task.title))
 			return
-	adding(story.name)
+	puts(colored.yellow(story.name))
 	newtask = TheHitList.Task()
 	newtask.title = ('%s /Pivotal'%(story.name)).encode('utf8')
 	newtask.notes = story.url.encode('utf8')
