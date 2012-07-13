@@ -12,17 +12,24 @@ SQL_FILE = commands.getoutput('defaults read com.potionfactory.TheHitList librar
 #SQL_FILE = SQL_FILE.replace('%20', ' ')
 SQL_FILE += '/library.sqlite3'
 
-SQL_STATEMENT = '''
-SELECT ZTITLE, ZSTARTDATE, ZDUEDATE FROM ZTASK
-WHERE ZCOMPLETEDDATE is NULL
-AND ZDUEDATE < (strftime('%%s', date('now')) - %(offset)s)
-''' % {
-    'offset': NSTIMEINTERVAL
-}
 
-conn = sqlite3.connect(SQL_FILE)
+class Application(object):
+    def __init__(self):
+        self.conn = sqlite3.connect(SQL_FILE)
+        self.c = self.conn.cursor()
 
-c = conn.cursor()
+    def test(self):
+        SQL_STATEMENT = '''
+            SELECT ZTITLE, ZSTARTDATE, ZDUEDATE FROM ZTASK
+            WHERE ZCOMPLETEDDATE is NULL
+            AND ZDUEDATE < (strftime('%%s', date('now')) - %(offset)s)
+            ''' % {
+                'offset': NSTIMEINTERVAL
+            }
+        for row in self.c.execute(SQL_STATEMENT):
+            print row[0].encode('utf8', 'replace')
 
-for row in c.execute(SQL_STATEMENT):
-    print row[0].encode('utf8', 'replace')
+
+if __name__ == '__main__':
+    thl = Application()
+    thl.test()
